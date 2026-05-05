@@ -1,166 +1,197 @@
 # Multi-Dimensional Model Integrity and Responsibility Assessment Index (MIRAI) and Scoring Framework
-This is the official repository of paper "Multi-Dimensional Model Integrity and Responsibility Assessment Index and Scoring Framework"
+
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Motivation](#motivation)
+- [Objective](#objective)
+- [Datasets](#datasets)
+- [Metrics](#metrics)
+- [Results](#results)
+- [Installation and Usage](#installation-and-usage)
 
 ---
 
-## 🚀 Overview
+## Overview
 
-Machine learning models in high-stakes domains (e.g., healthcare, finance, public decision-making) cannot be evaluated by accuracy alone. A model may be highly accurate but still:
+This is the official repository for **MIRAI**, a unified framework for **multi-dimensional evaluation of machine learning models** beyond predictive performance.
 
-- Unfair across demographic groups  
-- Difficult to interpret  
-- Vulnerable to adversarial attacks  
-- Prone to privacy leakage  
-- Computationally expensive and environmentally costly  
+MIRAI provides a holistic scoring system that integrates multiple responsible AI dimensions into a single **MIRAI score**, enabling meaningful comparison between models in real-world, high-stakes applications.
 
-**MIRAI (Model Integrity and Responsibility Assessment Index)** provides a **multi-dimensional evaluation framework** that integrates:
-
-- Explainability  
-- Fairness  
-- Sustainability  
-- Robustness  
-- Privacy  
-
-These dimensions are normalized and aggregated into a **single MIRAI score**, enabling direct and practical model comparison.
+<p align="center">
+  <img src="figures/mirai_framework.png" alt="MIRAI Framework" width="90%">
+</p>
 
 ---
 
-## 🧠 MIRAI Scoring
+## Motivation
 
-The MIRAI score is computed as:
+Artificial Intelligence is increasingly deployed in high-stakes domains, where model outputs directly impact individuals and institutions. Hence reliability and responsibility are critical:
 
-MIRAI = Σ (w_d × DS_d)
-
-Where:
-- DS_d = dimension score (normalized to [0,1])
-- w_d = weight (default: equal weights = 0.2)
-
-Notes:
-- All metrics are direction-aligned (lower-is-better → transformed using 1 - raw)
-- Accuracy and F1-score are reported separately
+- Accuracy alone is insufficient for evaluation  
+- Key dimensions such as fairness, privacy, and robustness are often isolated  
+- No unified framework exists to evaluate trade-offs  
 
 ---
 
-## 📊 Models Evaluated
+## Objective
 
-- Decision Tree (DT)
-- XGBoost (XGB)
-- Support Vector Machine (SVM)
-- Multi-Layer Perceptron (MLP)
-- TabResNet (TRN)
-- FT-Transformer (FTT)
+MIRAI evaluates models across **five key dimensions**:
 
----
+- **Explainability**: attribution quality and faithfulness  
+- **Fairness**: subgroup disparity and parity metrics  
+- **Sustainability**: carbon footprint and compute cost  
+- **Robustness**: adversarial and distribution shift  
+- **Privacy**: membership inference and leakage  
 
-## 📁 Datasets
-
-| Dataset | Domain | Samples | Features |
-|--------|--------|--------|----------|
-| Diabetes Hospitals | Healthcare | 101,763 | 22 |
-| German Credit | Finance | 1,000 | 22 |
-| Census Income | Socioeconomic | 32,561 | 14 |
+These dimensions are normalized and aggregated into a unified **MIRAI score**.
 
 ---
 
-## 📈 Results
+## Datasets
 
-### 🏥 Diabetes Hospitals
+We evaluate models across three domains:
 
-| Model | MIRAI | F1 Score | Explainability | Fairness | Sustainability | Robustness | Privacy |
-|------|-------|----------|----------------|----------|----------------|------------|---------|
-| DT   | 0.7635 | 0.7960 | 0.4456 | 0.9980 | 0.9899 | 0.8676 | 0.5164 |
-| XGB  | 0.7763 | 0.8360 | 0.5126 | 0.9993 | 0.9992 | 0.8619 | 0.5144 |
-| SVM  | 0.7724 | 0.8360 | 0.4312 | 0.9645 | 0.9639 | 0.8665 | 0.6361 |
-| MLP  | **0.7776** | 0.8380 | 0.4850 | 0.9947 | 0.9987 | 0.8506 | 0.5590 |
-| TRN  | 0.7607 | 0.8370 | 0.5101 | 0.9887 | 0.8913 | 0.8553 | 0.5582 |
-| FTT  | 0.5636 | 0.8360 | 0.4635 | 0.9155 | 0.0000 | **0.8730** | 0.5635 |
+- **German Credit** → Financial risk prediction  
+- **Diabetes Hospitals** → Healthcare outcome prediction  
+- **Census Income** → Socioeconomic classification  
 
 ---
 
-### 💳 German Credit
+## Metrics
 
-| Model | MIRAI | F1 Score | Explainability | Fairness | Sustainability | Robustness | Privacy |
-|------|-------|----------|----------------|----------|----------------|------------|---------|
-| DT   | 0.7282 | 0.7070 | 0.4601 | 0.8907 | 0.9999 | 0.6715 | 0.6188 |
-| XGB  | 0.7086 | 0.7460 | 0.4371 | **0.9465** | 0.9993 | 0.5308 | 0.6295 |
-| SVM  | 0.7377 | 0.6910 | 0.4451 | 0.9017 | 0.9951 | 0.6830 | **0.6635** |
-| MLP  | **0.7422** | 0.7330 | 0.4951 | 0.8862 | 0.9987 | **0.6930** | 0.6382 |
-| TRN  | 0.6540 | **0.7520** | **0.4982** | 0.8170 | 0.8913 | 0.4927 | 0.5706 |
-| FTT  | 0.4815 | 0.7340 | 0.4690 | 0.9202 | 0.0000 | 0.4853 | 0.5329 |
+The MIRAI pipeline consists of five core evaluation modules:
 
 ---
 
-### 👥 Census Income
+<details>
+<summary><strong>Explainability</strong></summary>
 
-| Model | MIRAI | F1 Score | Explainability | Fairness | Sustainability | Robustness | Privacy |
-|------|-------|----------|----------------|----------|----------------|------------|---------|
-| DT   | 0.6925 | 0.8140 | 0.4491 | 0.9035 | 0.9971 | 0.5948 | 0.5171 |
-| XGB  | 0.6890 | **0.8630** | 0.4271 | 0.9012 | **0.9992** | 0.5092 | 0.6098 |
-| SVM  | **0.7209** | 0.8440 | 0.4547 | 0.9117 | 0.9779 | 0.6406 | **0.6166** |
-| MLP  | 0.7189 | 0.8500 | 0.5078 | 0.9168 | 0.9991 | 0.5967 | 0.5710 |
-| TRN  | 0.6881 | 0.8460 | **0.5250** | 0.9210 | 0.8864 | 0.5160 | 0.5922 |
-| FTT  | 0.5698 | 0.8480 | 0.4809 | **0.9387** | 0.0000 | **0.8607** | 0.5700 |
+We evaluate explainability using the `Quantus` toolbox:
 
----
+**1. Complexity**
+- Sparseness (Gini Index)
+- Complexity (Entropy of feature attribution)
 
-## ⚙️ Model Configuration
+**2. Faithfulness**
+- Faithfulness Correlation
+- Faithfulness Estimate
 
-### Tree / Boosting
-- Decision Tree: max depth = 5  
-- XGBoost: 100 estimators, max depth = 5, learning rate = 0.1  
+**3. Robustness**
+- Local Lipschitz Estimate
+- Consistency
 
-### SVM
-- Kernel: RBF  
-- C = 1.0  
-- Gamma = scale  
+**4. Randomisation**
+- Model Parameter Randomisation Test (MPRT)
+- Random Logit Test
 
-### Neural Models
-
-| Model | Configuration |
-|------|--------------|
-| MLP | 1 hidden layer, hidden dim = 50, ReLU |
-| TabResNet | 2 residual blocks, block dim = 16 |
-| FT-Transformer | 3 blocks, 1 head, ReGLU |
+</details>
 
 ---
 
-## 🏋️ Training Parameters
+<details>
+<summary><strong>Fairness</strong></summary>
 
-| Parameter | Value |
-|----------|------|
-| Optimizer | Adam |
-| Learning Rate | 0.001 |
-| Epochs | 100 |
+Computed using `Fairlearn`:
 
----
+- Accuracy Difference  
+- Precision Difference  
+- True Positive Rate (TPR) Difference  
+- False Positive Rate (FPR) Difference  
+- Demographic Parity Difference  
+- Equalized Odds Difference  
 
-## 🔍 Evaluation Framework
+All metrics are normalized to [0,1].
 
-- Explainability → SHAP + Quantus  
-- Fairness → Fairlearn + AIF360  
-- Robustness → ART (HSJA attack) + Alibi Detect  
-- Privacy → Membership Inference + SHAPr  
-- Sustainability → FLOPs, MACs, Parameters, CO₂  
-
-All metrics are:
-- Normalized to [0,1]
-- Direction-aligned
-- Aggregated per dimension
+</details>
 
 ---
 
-## 💡 Key Insights
+<details>
+<summary><strong>Sustainability</strong></summary>
 
-- Best predictive performance ≠ best overall model  
-- Trade-offs exist across all responsible AI dimensions  
-- Simpler models (MLP, SVM) often achieve better balance  
-- Transformer-based models suffer from poor sustainability  
+- Number of Parameters  
+- FLOPs  
+- MACs  
+- Estimated CO₂ Emissions (Lacoste Score)  
+
+Higher scores indicate better efficiency.
+
+</details>
 
 ---
 
-## 📦 Installation
+<details>
+<summary><strong>Robustness</strong></summary>
 
-```bash
-git clone https://github.com/your-repo/mirai
-cd mirai
-pip install -r requirements.txt
+We evaluate robustness along two complementary dimensions:
+
+- **Adversarial Robustness (HSJA Accuracy Gap)**  
+  Measures performance degradation under HopSkipJump Attack (HSJA), a decision-based black-box attack.
+
+- **Distribution Shift Robustness (MMD Score)**  
+  Uses Maximum Mean Discrepancy (MMD) to detect prediction drift under distribution shifts.
+
+</details>
+
+---
+
+<details>
+<summary><strong>Privacy</strong></summary>
+
+We quantify privacy leakage using:
+
+- **Membership Inference Privacy (MI Privacy)**  
+  Evaluates vulnerability to membership inference attacks.
+
+- **SHAPr Privacy**  
+  Measures leakage through explanation-based attacks using SHAP values.
+
+</details>
+
+---
+
+## Results
+
+<div align="center">
+
+<table>
+  <thead>
+    <tr>
+      <th>Dataset</th>
+      <th>Model</th>
+      <th>F1 Score</th>
+      <th>MIRAI Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- German Credit -->
+    <tr><td>German Credit</td><td>DT</td><td>0.7070</td><td>0.7282</td></tr>
+    <tr><td></td><td>XGB</td><td>0.7460</td><td>0.7086</td></tr>
+    <tr><td></td><td>SVM</td><td>0.6910</td><td>0.7377</td></tr>
+    <tr><td></td><td>MLP</td><td>0.7330</td><td><strong>0.7422</strong></td></tr>
+    <tr><td></td><td>TRN</td><td><strong>0.7520</strong></td><td>0.6540</td></tr>
+    <tr><td></td><td>FTT</td><td>0.7340</td><td>0.4815</td></tr>
+
+    <!-- Diabetes -->
+    <tr><td>Diabetes</td><td>DT</td><td>0.7960</td><td>0.7635</td></tr>
+    <tr><td></td><td>XGB</td><td>0.8360</td><td>0.7763</td></tr>
+    <tr><td></td><td>SVM</td><td>0.8360</td><td>0.7724</td></tr>
+    <tr><td></td><td>MLP</td><td><strong>0.8380</strong></td><td><strong>0.7776</strong></td></tr>
+    <tr><td></td><td>TRN</td><td>0.8370</td><td>0.7607</td></tr>
+    <tr><td></td><td>FTT</td><td>0.8360</td><td>0.5636</td></tr>
+
+    <!-- Census -->
+    <tr><td>Census Income</td><td>DT</td><td>0.8140</td><td>0.6925</td></tr>
+    <tr><td></td><td>XGB</td><td><strong>0.8630</strong></td><td>0.6890</td></tr>
+    <tr><td></td><td>SVM</td><td>0.8440</td><td><strong>0.7209</strong></td></tr>
+    <tr><td></td><td>MLP</td><td>0.8500</td><td>0.7189</td></tr>
+    <tr><td></td><td>TRN</td><td>0.8460</td><td>0.6881</td></tr>
+    <tr><td></td><td>FTT</td><td>0.8480</td><td>0.5698</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+---
