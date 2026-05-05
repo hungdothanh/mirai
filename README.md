@@ -128,9 +128,7 @@ We compute the final MIRAI score by aggregating the five dimension scores. Each 
 
 The final MIRAI score is computed as:
 
-\[
-\text{MIRAI} = \sum_{d=1}^{5} w_d \cdot DS_d
-\]
+`MIRAI = sum_{d=1}^{5} w_d * DS_d`
 
 where \(w_d = 0.2\) by default. This weighting allows flexible, context-aware evaluation while maintaining comparability. Predictive performance (Accuracy and F1-score) is reported separately.
 
@@ -139,6 +137,7 @@ where \(w_d = 0.2\) by default. This weighting allows flexible, context-aware ev
 ## Results
 
 <div align="center">
+
 <table>
   <thead>
     <tr>
@@ -149,7 +148,7 @@ where \(w_d = 0.2\) by default. This weighting allows flexible, context-aware ev
     </tr>
   </thead>
   <tbody>
-    <!-- German Credit -->
+
     <tr><td>German Credit</td><td>DT</td><td>0.7070</td><td>0.7282</td></tr>
     <tr><td></td><td>XGB</td><td>0.7460</td><td>0.7086</td></tr>
     <tr><td></td><td>SVM</td><td>0.6910</td><td>0.7377</td></tr>
@@ -157,7 +156,6 @@ where \(w_d = 0.2\) by default. This weighting allows flexible, context-aware ev
     <tr><td></td><td>TRN</td><td><strong>0.7520</strong></td><td>0.6540</td></tr>
     <tr><td></td><td>FTT</td><td>0.7340</td><td>0.4815</td></tr>
 
-    <!-- Diabetes -->
     <tr><td>Diabetes</td><td>DT</td><td>0.7960</td><td>0.7635</td></tr>
     <tr><td></td><td>XGB</td><td>0.8360</td><td>0.7763</td></tr>
     <tr><td></td><td>SVM</td><td>0.8360</td><td>0.7724</td></tr>
@@ -165,13 +163,14 @@ where \(w_d = 0.2\) by default. This weighting allows flexible, context-aware ev
     <tr><td></td><td>TRN</td><td>0.8370</td><td>0.7607</td></tr>
     <tr><td></td><td>FTT</td><td>0.8360</td><td>0.5636</td></tr>
 
-    <!-- Census Income -->
     <tr><td>Census Income</td><td>DT</td><td>0.8140</td><td>0.6925</td></tr>
     <tr><td></td><td>XGB</td><td><strong>0.8630</strong></td><td>0.6890</td></tr>
     <tr><td></td><td>SVM</td><td>0.8440</td><td><strong>0.7209</strong></td></tr>
     <tr><td></td><td>MLP</td><td>0.8500</td><td>0.7189</td></tr>
     <tr><td></td><td>TRN</td><td>0.8460</td><td>0.6881</td></tr>
     <tr><td></td><td>FTT</td><td>0.8480</td><td>0.5698</td></tr>
+
   </tbody>
 </table>
+
 </div>
