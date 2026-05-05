@@ -7,7 +7,6 @@
 - [Metrics](#metrics)
 - [Results](#results)
 
----
 
 ## Overview
 
@@ -41,7 +40,6 @@ We evaluate models across three domains:
 - **Diabetes Hospitals** → Healthcare outcome prediction  
 - **Census Income** → Socioeconomic classification  
 
----
 
 ## Metrics
 
@@ -136,12 +134,11 @@ The final MIRAI score is computed as:
 
 where \(w_d = 0.2\) by default. This weighting allows flexible, context-aware evaluation while maintaining comparability. Predictive performance (Accuracy and F1-score) is reported separately.
 
----
+
 
 ## Results
 
 <div align="center">
-
 <table>
   <thead>
     <tr>
@@ -177,7 +174,4 @@ where \(w_d = 0.2\) by default. This weighting allows flexible, context-aware ev
     <tr><td></td><td>FTT</td><td>0.8480</td><td>0.5698</td></tr>
   </tbody>
 </table>
-
 </div>
-
----
